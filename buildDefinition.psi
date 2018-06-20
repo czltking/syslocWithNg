@@ -1,0 +1,2 @@
+tsc ./src/app/service/history.service.ts ./src/app/device.service.ts  ./src/app/ol-map.service.ts ./src/app/asset.service.ts --declaration --outDir src/typings/
+tsc ./src/assets/map-editor.ts ./src/assets/map-monitor.ts  

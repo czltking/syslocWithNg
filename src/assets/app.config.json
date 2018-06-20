@@ -1,0 +1,53 @@
+{
+    "asset-profile-url": "/assets/local-terminals.json",
+    "multiPanelConfiguration": {
+        "items": [],
+        "taskListSource": {
+            "url": "/TK/GetUncompleteTask"
+        }
+    },
+    "toolbar": {
+        "items": [
+            {
+                "class": "fa fa-car",
+                "title": "一般",
+                "code": "sf",
+                "color": "blue",
+                "visable": true
+            }
+        ],
+        "itemsDetailed": []
+    },
+    "map": {
+        "geoServerUrl": "http://192.168.8.62:8080/geoserver",
+        "mqttUser": "admin",
+        "mqttPd": "password",
+        "locationConfig": {
+            "locationURI": "ws://192.168.8.46:61623",
+            "mqttTopic": "location",
+            "wsType": "mqtt"
+        },
+        "msgConfig": {
+            "wsType": "ws",
+            "mqttTopic": "",
+            "ServiceURI": ""
+        },
+        "trackOfComponent": false,
+        "webService": "http://127.0.0.1:3728",
+        "layers": {
+            "OMS": true,
+            "bg": true,
+            "road": false,
+            "distance": false,
+            "marks": false
+        },
+        "centerPoint": [
+            118.8907,
+            32.19989
+        ],
+        "centerSrs": "EPSG:4326",
+        "srs": "EPSG:3857",
+        "zoom": 15,
+        "geoServerGroup": "postgis_demo"
+    }
+}

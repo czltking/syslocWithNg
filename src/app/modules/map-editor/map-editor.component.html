@@ -1,0 +1,187 @@
+<cl-map></cl-map>
+<!-- <div class="alert alert-info fixed-top" role="alert">
+    <button class="btn btn-sm btn-primary" (click)="Save();">确 定</button>&nbsp;
+    <button class="btn btn-sm btn-secondary" (click)="Reset();">重 绘</button>&nbsp;
+    <button class="btn btn-sm btn-secondary" (click)="Clear();">清 除</button>&nbsp; 鼠标点击可绘制区域
+
+</div> -->
+<div class="alert alert-info ">
+    <!-- <select [ngModel]="regId">
+        <option [value]='r.id' *ngFor="let r of regTypes" >{{r.name}}</option>
+    </select> -->
+
+    <select id="leader" (change)="getChange($event.target.value)">
+        <option *ngFor="let leader of regTypes">{{leader}}</option>
+    </select>
+
+    <a href="javascript:void(0);" class="btn btn-defaul">
+        <i class="fa fa-eraser fa-lg" onclick="" title="重置"></i>
+    </a>
+    <a href="javascript:void(0);" class="btn btn-defaul">
+        <i class="fa fa-pie-chart fa-lg" (click)="DrawPolygon();" title="多边形"></i>
+    </a>
+    <a href="javascript:void(0);" class="btn btn-defaul">
+        <i class="fa fa-circle-thin fa-lg" (click)="DrawCircle();" title="圆形"></i>
+    </a>
+    <a href="javascript:void(0);" class="btn btn-defaul">
+        <i class="fa fa-trash fa-lg" onclick="" title="删除"></i>
+    </a>
+
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">电子围栏</h4>
+        <button type="button" class="close" aria-label="Close" (click)="indexClose();openDig.close();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="cl pd-5 " id="chkList">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>名    称:</td>
+                        <td>
+                            <input id="regNames" type="text" style="width: 250px" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>禁入人员:</td>
+                        <td>
+                            <input id="empNames" placeholder="人员姓名" type="text" role="textbox" data-perid="0" data-perEmps="" data-tprid="0" style="width: 225px"
+                            />
+                            <a href="javascript:void();" class="btn btn-defaul">
+                                <i class="fa fa-pie-chart fa-lg" (click)="showPoint();" title="设置人员"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <input class="btn btn-primary radius" id="btnAdd" type="button" style="height: 27px" width="30px" role="button" (click)="saveRegEmp();"
+                value="保存" /> &nbsp;&nbsp;
+            <input class="btn btn-primary radius" id="btnClose" type="button" style="height: 27px" width="30px" role="button" (click)="indexClose();openDig.close();"
+                value="关闭" />
+            <label>&nbsp;&nbsp;&nbsp;</label>
+            <label id="lblMessage" style="color:blue"> </label>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #showEmp let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">报警人员配置</h4>
+        <button type="button" class="close" aria-label="Close" (click)="showOpen.close();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="cl pd-5 " id="chkList">
+            <table border="0" width="300" class="table table-border table-bordered table-bg table-hover table-sort">
+                <tr>
+                    <td>
+                        <select style="width:100px; height:200px" id="ls1" multiple name="list1" size="12" (dblclick)="moveOption(document.getElementById('ls1'), document.getElementById('ls2'));">
+
+                        </select>
+                    </td>
+                    <td align="center">
+                        <input type="button" value=">>" (click)="moveOption(document.getElementById('ls1'), document.getElementById('ls2'));">
+                        <br />
+                        <br />
+                        <input type="button" value="<<" (click)="moveOption(document.getElementById('ls2'), document.getElementById('ls1'));">
+                    </td>
+                    <td>
+                        <select style="width:100px; height:200px" id="ls2" multiple name="list2" size="12" (dblclick)="moveOption(document.getElementById('ls2'), document.getElementById('ls1'));"></select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <input class="btn btn-primary radius" id="btnAdd" type="button" style="height: 27px" width="30px" (click)="setPointList();"
+                role="button" value="确定" />
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #rcallReg let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">电子点名</h4>
+        <button type="button" class="close" aria-label="Close" (click)="indexCloseRollCall();rcDialog.close();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="cl pd-5 " id="chkList">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>名称:</td>
+                        <td>
+                            <input id="regNames" type="text" style="width: 250px" />
+                        </td>
+                        <td>
+                            <input id="isEndPoint" type="checkbox">集合终点</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <input class="btn btn-primary radius" id="btnAdd" type="button" style="height: 27px" width="30px" role="button" (click)="saveRegRollCall();"
+                value="保存" /> &nbsp;&nbsp;
+            <input class="btn btn-primary radius" id="btnClose" type="button" style="height: 27px" width="30px" role="button" (click)="indexCloseRollCall();rcDialog.close();"
+                value="关闭" />
+            <label>&nbsp;&nbsp;&nbsp;</label>
+            <label id="lblMessage" style="color:blue"> </label>
+        </div>
+    </div>
+</ng-template>
+
+<!-- <div id="DialogSelect">
+        <div class="cl pd-5 " id="chkList">
+                <table>
+                    <tbody>
+                        <tr><td>名称:</td><td><input id="regNames" type="text" style="width: 250px" /></td></tr>
+                        <tr><td>禁入人员:</td><td><input id="empNames" placeholder="人员姓名" type="text" role="textbox" data-perid="0" data-perEmps="" data-tprid="0" style="width: 225px" /><a  href="javascript:void();"class="btn btn-defaul"><i class="fa fa-pie-chart fa-lg" (click)="showPoint();" title="设置人员"></i></a></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+                <input class="btn btn-primary radius" id="btnAdd" type="button" style="height: 27px" width="30px" onclick="sys.busi2D.saveRegEmp()" role="button" value="保存" />
+                <input class="btn btn-primary radius" id="btnClose" type="button" style="height: 27px" width="30px" onclick="sys.busi2D.indexClose()" role="button" value="关闭" />
+                <label>&nbsp;&nbsp;&nbsp;</label>
+                <label id="lblMessage" style="color:blue"> </label>
+            </div>
+</div> -->
+<div #window style="display: none;">
+
+</div>
+<vinci-multi-panels  [width]="'300px'" >
+        <vinci-multi-panels-item [iconClass]="'fa fa-bell-o'" [code]="'home'" [title]="'电子围栏'" [class]="'home'">
+          <h5>电子围栏列表</h5>
+          <div>
+           <ul class="regs">
+               <li  *ngFor="let item of regDWList" (dblclick)="onSelectDW(item)" id={{item.id}} >  
+                   <span>{{item.showName}}</span>                
+               </li>
+           </ul>
+          </div>
+        </vinci-multi-panels-item>
+        <vinci-multi-panels-item [iconClass]="'fa fa-bullhorn'" [code]="'info'" [title]="'电子点名'" [class]="'info'">
+          <h5>电子点名列表</h5>
+          <div>
+              <ul class="regs">
+                  <li *ngFor="let item of rcDMList" (dblclick)="onSelectRcDM(item)" id={{item.id}}>
+                        {{item.showName}}
+                  </li>
+              </ul>
+          </div>
+        </vinci-multi-panels-item>
+</vinci-multi-panels>

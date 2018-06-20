@@ -1,0 +1,32 @@
+<table class="table table-sm" style="margin-bottom: 0;">
+  <colgroup>
+    <col style="width:20%" />
+    <col style="width:20%" />
+    <col style="width:30%" />
+    <col style="width:30%" />
+  </colgroup>
+  <thead>
+    <td>名称</td>
+    <td>终端标识</td>
+    <td>坐标</td>
+    <td>时间</td>
+  </thead>
+</table>
+<div class="t-content" #bodyContainer>
+  <table class="table table-sm table-hover">
+    <colgroup>
+      <col style="width:20%" />
+      <col style="width:20%" />
+      <col style="width:30%" />
+      <col style="width:30%" />
+    </colgroup>
+    <tbody #body>
+      <tr *ngFor="let item of historyService.Data; let index=index" (click)="ItemClick(item,index)">
+        <td>{{item.Name}}</td>
+        <td>{{item.UniqueId}}</td>
+        <td>{{item.X}},{{item.Y}}</td>
+        <td>{{item.CollectTime}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

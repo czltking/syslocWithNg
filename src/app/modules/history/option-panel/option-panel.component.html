@@ -1,0 +1,40 @@
+<div class="form container">
+  <div class="form-group">
+    <label for="selectDevice">{{CurrentDevice?CurrentDevice.Title:"请选择设备"}}</label>&nbsp;
+    <button id="selectDevice" class="btn btn-primary" (click)="SelectDeive();">选择设备</button>
+  </div>
+  <div class="form-group">
+    <label for="op_sTime">开始时间：</label>
+    <input type="datetime-local" id="op_sTime" class="form-control form-control-sm" [value]="STime" (change)="STime=$event.target.value"
+    />
+  </div>
+  <div class="form-group">
+    <label for="op_eTime">结束时间：</label>
+    <input type="datetime-local" id="op_eTime" class="form-control form-control-sm" [value]="ETime" (change)="ETime=$event.target.value"
+    />
+  </div>
+  <div class="form-group">
+    <button (click)="Search();" class="btn btn-success">搜 索</button>
+  </div>
+</div>
+<div class="border"></div>
+<div class="container">
+  <div class="">
+    <button class="btn btn-primary" (click)="Resume()">继 续
+      <i class=""></i>
+    </button>&nbsp;
+    <button class="btn btn-secondary" (click)="Stop()">停 止
+      <i class=""></i>
+    </button>
+
+  </div>
+</div>
+<div class="form-group">
+  <!-- task  INFO -->
+  <div></div>
+</div>
+
+<div class="border"></div>
+<div>
+  <p *ngFor="let s of Infos">{{s}}</p>
+</div>
